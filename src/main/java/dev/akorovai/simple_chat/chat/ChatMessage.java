@@ -1,23 +1,24 @@
 package dev.akorovai.simple_chat.chat;
 
-import lombok.*;
-import org.springframework.data.mongodb.core.mapping.Document;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
+import java.util.Date;
 
-import java.sql.Date;
-
-@Getter
-@Setter
+@Data
 @AllArgsConstructor
-@NonNull
+@NoArgsConstructor
 @Builder
 @Document
 public class ChatMessage {
     @Id
     private String id;
-    private String senderId;
-    private String receiverId;
-    private String content;
     private String chatId;
+    private String senderId;
+    private String recipientId;
+    private String content;
     private Date timestamp;
 }

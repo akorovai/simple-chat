@@ -15,15 +15,18 @@ import java.util.List;
 @Configuration
 @EnableWebSocketMessageBroker
 public class WebSocketConfig implements WebSocketMessageBrokerConfigurer {
+
     @Override
     public void configureMessageBroker(MessageBrokerRegistry registry) {
         registry.enableSimpleBroker("/user");
         registry.setApplicationDestinationPrefixes("/app");
+        registry.setUserDestinationPrefix("/user");
     }
 
     @Override
     public void registerStompEndpoints(StompEndpointRegistry registry) {
-        registry.addEndpoint("/ws").withSockJS();
+        registry.addEndpoint("/ws")
+                .withSockJS();
     }
 
     @Override
@@ -33,8 +36,6 @@ public class WebSocketConfig implements WebSocketMessageBrokerConfigurer {
         MappingJackson2MessageConverter converter = new MappingJackson2MessageConverter();
         converter.setObjectMapper(new ObjectMapper());
         converter.setContentTypeResolver(resolver);
-        messageConverters.add(new SimpleMessageConverter());
-        messageConverters.add(new ByteArrayMessageConverter());
         messageConverters.add(converter);
         return false;
     }

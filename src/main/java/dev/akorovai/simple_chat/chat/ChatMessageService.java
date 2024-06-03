@@ -14,7 +14,9 @@ public class ChatMessageService {
     private final ChatRoomService chatRoomService;
 
     public ChatMessage save(ChatMessage chatMessage) {
-        var chatId = chatRoomService.getChatRoomId(chatMessage.getSenderId(), chatMessage.getReceiverId(), true).orElseThrow(() -> new RuntimeException("Chat room not found"));
+        var chatId = chatRoomService
+                .getChatRoomId(chatMessage.getSenderId(), chatMessage.getRecipientId(), true)
+                .orElseThrow();
         chatMessage.setChatId(chatId);
         repository.save(chatMessage);
         return chatMessage;

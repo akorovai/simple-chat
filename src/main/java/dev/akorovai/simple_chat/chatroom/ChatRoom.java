@@ -1,11 +1,14 @@
 package dev.akorovai.simple_chat.chatroom;
 
-import lombok.*;
+
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-@Getter
-@Setter
+@Data
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
@@ -15,5 +18,7 @@ public class ChatRoom {
     private String id;
     private String chatId;
     private String senderId;
-    private String receiverId;
+    private String recipientId;
 }
+
+

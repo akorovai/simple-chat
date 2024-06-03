@@ -5,11 +5,6 @@ import org.springframework.stereotype.Service;
 
 import java.util.Optional;
 
-import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Service;
-
-import java.util.Optional;
-
 @Service
 @RequiredArgsConstructor
 public class ChatRoomService {
@@ -18,15 +13,15 @@ public class ChatRoomService {
 
     public Optional<String> getChatRoomId(
             String senderId,
-            String receiverId,
+            String recipientId,
             boolean createNewRoomIfNotExists
     ) {
         return chatRoomRepository
-                .findBySenderIdAndReceiverId(senderId, receiverId)
+                .findBySenderIdAndRecipientId(senderId, recipientId)
                 .map(ChatRoom::getChatId)
                 .or(() -> {
                     if(createNewRoomIfNotExists) {
-                        var chatId = createChatId(senderId, receiverId);
+                        var chatId = createChatId(senderId, recipientId);
                         return Optional.of(chatId);
                     }
 
@@ -34,21 +29,21 @@ public class ChatRoomService {
                 });
     }
 
-    private String createChatId(String senderId, String receiverId) {
-        var chatId = String.format("%s_%s", senderId, receiverId);
+    private String createChatId(String senderId, String recipientId) {
+        var chatId = String.format("%s_%s", senderId, recipientId);
 
         ChatRoom senderRecipient = ChatRoom
                 .builder()
                 .chatId(chatId)
                 .senderId(senderId)
-                .receiverId(receiverId)
+                .recipientId(recipientId)
                 .build();
 
         ChatRoom recipientSender = ChatRoom
                 .builder()
                 .chatId(chatId)
-                .senderId(receiverId)
-                .receiverId(senderId)
+                .senderId(recipientId)
+                .recipientId(senderId)
                 .build();
 
         chatRoomRepository.save(senderRecipient);
