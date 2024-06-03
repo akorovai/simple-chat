@@ -34,4 +34,4 @@ build/
 
 ### Log ###
 
-src/main/resources/logs/*.log
+src/main/resources/logs/**/*.log
